@@ -1,3 +1,7 @@
+// Widths are fractional; absorb float error so items that exactly fill the
+// available width still count as fitting.
+const SUBPIXEL_TOLERANCE = 0.5;
+
 export const getVisibleItemCount = ({
   itemWidths,
   availableWidth,
@@ -18,7 +22,10 @@ export const getVisibleItemCount = ({
 
     const shouldKeepFirstItemVisible = visibleItemCount === 0;
 
-    if (!shouldKeepFirstItemVisible && nextOccupiedWidth > availableWidth) {
+    if (
+      !shouldKeepFirstItemVisible &&
+      nextOccupiedWidth > availableWidth + SUBPIXEL_TOLERANCE
+    ) {
       const partialItemFits = occupiedWidth + gap < availableWidth;
 
       return includePartialItem && partialItemFits

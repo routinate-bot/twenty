@@ -66,4 +66,27 @@ describe('getVisibleItemCount', () => {
       }),
     ).toBe(2);
   });
+
+  it('includes every item when fractional widths fill the space exactly', () => {
+    // 126.711 + 4 + 127.203 + 4 + 126.57 = 388.484 (with float error)
+    expect(
+      getVisibleItemCount({
+        itemWidths: [126.711, 127.203, 126.57],
+        availableWidth: 388.484,
+        gap: 4,
+        includePartialItem: false,
+      }),
+    ).toBe(3);
+  });
+
+  it('still excludes an item that overflows by more than a sub-pixel', () => {
+    expect(
+      getVisibleItemCount({
+        itemWidths: [126.711, 127.203, 126.57],
+        availableWidth: 387.5,
+        gap: 4,
+        includePartialItem: false,
+      }),
+    ).toBe(2);
+  });
 });

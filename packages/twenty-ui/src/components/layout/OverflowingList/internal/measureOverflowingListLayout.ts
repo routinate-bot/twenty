@@ -19,7 +19,7 @@ export const measureOverflowingListLayout = ({
 }): OverflowingListLayout => {
   const itemWidths = measureItemWidths({ items, itemElements });
   const gap = parseFloat(getComputedStyle(items).columnGap) || 0;
-  const containerWidth = container.clientWidth;
+  const containerWidth = container.getBoundingClientRect().width;
   const fittedItemCount = getVisibleItemCount({
     itemWidths,
     availableWidth: containerWidth,
@@ -27,7 +27,7 @@ export const measureOverflowingListLayout = ({
     includePartialItem: false,
   });
   const hasOverflow = itemCount > fittedItemCount;
-  const triggerWidth = trigger?.offsetWidth ?? 0;
+  const triggerWidth = trigger?.getBoundingClientRect().width ?? 0;
   const availableWidth =
     reserveCountSpace && hasOverflow
       ? Math.max(0, containerWidth - triggerWidth - gap)
