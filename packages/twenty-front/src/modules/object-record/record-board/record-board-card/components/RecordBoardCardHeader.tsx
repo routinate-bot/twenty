@@ -83,7 +83,7 @@ export const RecordBoardCardHeader = () => {
   return (
     <RecordCardHeaderContainer isCompact={isCompactModeActive}>
       <StyledRecordChipContainer>
-        <StopPropagationContainer>
+        <StopPropagationContainer shouldLetBackgroundClicksThrough>
           {isDefined(recordStore) && (
             <RecordChip
               objectNameSingular={objectMetadataItem.nameSingular}
